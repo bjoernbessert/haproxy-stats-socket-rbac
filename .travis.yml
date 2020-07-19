@@ -1,0 +1,33 @@
+language: bash
+
+dist: bionic
+
+services:
+  - docker
+
+env:
+  - UBUNTU_DOCKER_IMAGE=ubuntu:20.04 HAPROXY_MAIN_VERSION=2.2
+  - UBUNTU_DOCKER_IMAGE=ubuntu:18.04 HAPROXY_MAIN_VERSION=2.2
+
+before_install:
+  - sudo rm -f /etc/apt/sources.list.d/pgdg.list
+  - travis_retry sudo apt-get update
+  - travis_retry sudo apt-get -y install bats
+
+install:
+  - cd dockerfiles/apache
+  - travis_retry make build-without-cache
+  - cd "$TRAVIS_BUILD_DIR"
+  - cd dockerfiles/haproxy
+  - travis_retry make build-without-cache
+  - cd "$TRAVIS_BUILD_DIR"
+
+script:
+  - make test
+
+after_script:
+  - make clean
+
+notifications:
+  email:
+    - haproxy.cert.otf.travis@gmail.com

@@ -1,0 +1,5 @@
+# TODO: curl with timeout
+# TODO: http-method + "sub2.example.local"
+# TODO: maybe use native "output" variable instead of grep
+# TODO: check if docker-compose stack is already started
+

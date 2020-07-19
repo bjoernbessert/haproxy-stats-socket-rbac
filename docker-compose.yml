@@ -1,0 +1,15 @@
+version: "3"
+services:
+  haproxy:
+    hostname: haproxy
+    image: bjoernbessert/haproxy-stats-socket-rbac-haproxy
+    volumes:
+      - ./src:/opt/haproxy-stats-socket-rbac
+    depends_on:
+      - apache
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+  apache:
+    hostname: apache
+    image: bjoernbessert/haproxy-stats-socket-rbac-apache
