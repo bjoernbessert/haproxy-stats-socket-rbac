@@ -11,14 +11,12 @@ import yaml
 
 SO_PEERCRED = 17
 
-
 def getArgs():
     parser = argparse.ArgumentParser(description='', usage="usage: prog [options]")
     parser.add_argument('--destination_socket', action='store', dest='destination_socket', help='', required=True)
     parser.add_argument('--server_socket', action='store', dest='server_socket', help='', required=True)
 
     return parser.parse_args()
-
 
 def send_command(destination_socket, command):
 
@@ -45,14 +43,12 @@ def send_command(destination_socket, command):
 
     return result
 
-
 def lookup_user(connection):
     creds = connection.getsockopt(socket.SOL_SOCKET, SO_PEERCRED, struct.calcsize('3i'))
     pid, uid, gid = struct.unpack("3i", creds)
     print("pid: %d, uid: %d, gid %d" % (pid, uid, gid))
 
     return pwd.getpwuid(uid).pw_name
-
 
 def load_permissions():
     # abspath not working if script is called via symlink
@@ -65,7 +61,6 @@ def load_permissions():
     f.close()
 
     return permissions
-
 
 def has_permission(username, command):
     perms = load_permissions()
@@ -81,7 +76,6 @@ def has_permission(username, command):
 
     # secure default
     return False
-
 
 def check_preconditions(destination_socket, server_socket):
 
@@ -106,7 +100,6 @@ def check_preconditions(destination_socket, server_socket):
     except OSError:
         if os.path.exists(server_socket):
             raise
-
 
 def server_loop(destination_socket, server_socket):
 
@@ -158,7 +151,6 @@ def server_loop(destination_socket, server_socket):
     os.remove(server_socket)
     print("Done")
 
-
 def main():
 
     args_parsed = getArgs()
@@ -169,7 +161,6 @@ def main():
     check_preconditions(destination_socket, server_socket)
 
     server_loop(destination_socket, server_socket)
-
 
 if __name__ == '__main__':
     main()
