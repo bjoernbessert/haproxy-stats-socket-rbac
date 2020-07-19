@@ -15,7 +15,11 @@ RUN apt-get update && apt-get install -yq software-properties-common
 RUN add-apt-repository -y ppa:vbernat/haproxy-$HAPROXY_MAIN_VERSION && apt-get update && \
     apt-get install -yq haproxy=$HAPROXY_MAIN_VERSION.\* 
 
-#RUN apt-get update && apt-get install -yq netcat socat iputils-ping curl wget less vim psmisc net-tools
+RUN apt-get update && apt-get install -yq supervisor
+RUN mkdir -p /var/log/supervisor
+COPY files/supervisord.conf /etc/supervisor/supervisord.conf
+
+RUN apt-get update && apt-get install -yq netcat socat iputils-ping curl wget less vim psmisc net-tools
 
 RUN mkdir /etc/haproxy/certs
 COPY files/fallback.example.local.pem /etc/haproxy/certs/
@@ -31,5 +35,11 @@ RUN update-ca-certificates
 
 # Info
 RUN haproxy -vv
+
+RUN echo "export TERM=xterm" >> /etc/bash.bashrc
+
+RUN apt-get autoremove -y
+RUN apt-get clean
+RUN rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
