@@ -23,10 +23,10 @@ COPY files/fallback.example.local.pem /etc/haproxy/certs/
 RUN mkdir /opt/haproxy-stats-socket-rbac
 
 RUN rm -f /etc/haproxy/haproxy.cfg
-COPY files/haproxy.cfg  /etc/haproxy/haproxy.cfg
+COPY files/haproxy.cfg /etc/haproxy/haproxy.cfg
 
 # For local testing
-COPY files/generate-cert/ca.crt /usr/local/share/ca-certificates/
+COPY files/ca.crt /usr/local/share/ca-certificates/
 RUN update-ca-certificates
 
 # Info
