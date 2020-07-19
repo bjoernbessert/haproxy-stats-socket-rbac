@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -yq software-properties-common
 RUN add-apt-repository -y ppa:vbernat/haproxy-$HAPROXY_MAIN_VERSION && apt-get update && \
     apt-get install -yq haproxy=$HAPROXY_MAIN_VERSION.\* 
 
+RUN apt-get update && apt-get install -yq python3-yaml
+
 RUN apt-get update && apt-get install -yq supervisor
 RUN mkdir -p /var/log/supervisor
 COPY files/supervisord.conf /etc/supervisor/supervisord.conf

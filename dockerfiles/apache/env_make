@@ -1,3 +1,3 @@
 NS = bjoernbessert
-REPO = haproxy-stats-socket-rbac-haproxy
+REPO = haproxy-stats-socket-rbac-apache
 VERSION ?= latest

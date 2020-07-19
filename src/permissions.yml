@@ -1,0 +1,17 @@
+---
+permissions:
+  root:
+    - '.*'
+  monitoring:
+    - '^show\s.*'
+  user01:
+    - '^show\s.*'
+    - '^disable server be01\/.*'
+    - '^enable server be01\/.*'
+  user02:
+    - '^show\s.*'
+    - '^disable server be02\/.*'
+    - '^enable server be02\/.*'
+
+#TODO: Test with ";"
+
